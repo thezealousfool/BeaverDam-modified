@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 from tqdm import tqdm
@@ -148,7 +148,7 @@ class Task(models.Model):
 
 
 class FullVideoTask(Task):
-    video = models.ForeignKey(Video)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
     title = settings.MTURK_TITLE
     description = settings.MTURK_DESCRIPTION
     pay = settings.MTURK_BASE_PAY
@@ -168,7 +168,7 @@ class FullVideoTask(Task):
 
 
 class SingleFrameTask(Task):
-    video = models.ForeignKey(Video)
+    video = models.ForeignKey(Video, on_delete=models)
     time = models.FloatField()
     title = "Image Annotation"
     description = "Draw boxes around all objects of interest in an image, with bonus per object"
